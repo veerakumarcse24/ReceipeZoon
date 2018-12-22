@@ -1,0 +1,40 @@
+<!-- main app container -->
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2>Create Recipe</h2>
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label>Recipe Title</label>
+                        <input type="text" formControlName="recipe_name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.recipe_name.errors }" />
+                        <div *ngIf="submitted && f.recipe_name.errors" class="invalid-feedback">
+                            <div *ngIf="f.recipe_name.errors.required">Recipe name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180">
+                        </div>
+                        <button type="button" class="btn btn-light" onclick="document.getElementById('id_docfile').click()"> Upload Recipe Images </button>
+                        <input id="id_docfile" type="file" multiple style="display:none;" formControlName="recipe_images" class="form-control" (change)="detectFiles($event)" accept="image/x-png,image/gif,image/jpeg">
+                        <div *ngIf="submitted && f.recipe_images.errors" class="error_msg">
+                            <div *ngIf="f.recipe_images.errors.required">Recipe images are required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea #content class="form-control"  formControlName="recipe_description">{{registerForm.get('recipe_description').value}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input type="text" formControlName="recipe_due" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.recipe_due.errors }" />
+                    </div>
+                    <div class="form-group">
+                        <button [disabled]="loading" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
