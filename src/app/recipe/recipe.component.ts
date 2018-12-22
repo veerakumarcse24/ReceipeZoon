@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { RecipeService } from '../services/recipe.service';
 import { Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-recipe',
@@ -15,9 +16,10 @@ export class RecipeComponent implements OnInit {
   urls = new Array<string>();
     submitted = false;
 
-    constructor(private formBuilder: FormBuilder, public recipeService: RecipeService, private http: HttpClient) { }
+    constructor(private formBuilder: FormBuilder, public recipeService: RecipeService, private http: HttpClient, private _flashMessagesService: FlashMessagesService) { }
 
     ngOnInit() {
+        this._flashMessagesService.show('Success!', { cssClass: 'alert-success' } );
         this.registerForm = this.formBuilder.group({
             recipe_name: ['', Validators.required],
             recipe_images: [new Array<string>(), Validators.required],
