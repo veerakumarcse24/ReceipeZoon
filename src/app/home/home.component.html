@@ -9,11 +9,13 @@
    </div>
    <hr>
    <div class="row">
-   	<div class="col-xs-6 col-sm-3 div_content" style="background-color:lavender;">
-   	Column 1<br>
-   	Resize the browser window to see the effect. Also try to remove the div clearfix line and see what happens.
+   	<div *ngFor="let recipe of recipesList" class="col-xs-6 col-sm-4 div_content" style="background-color:lavender;">
+      	<span class="p-l"><b>{{recipe.recipe_name}}</b></span><span class="p-r" (click)="deleteRecipe(recipe.id)" data-toggle="tooltip" title="Delete Recipe"><img src="assets/img/trash_icon.png" alt="delete" ></span>
+         <slideshow [imageUrls]="recipe.image_urls" [autoPlayInterval]="convertInt(recipe.recipe_due)" [height]="'200px'" ></slideshow>
+         <!-- Duration:
+         <div>{{recipe.recipe_due}}</div> -->
+         Description:
+      	<div style="max-width: 100px;">{{recipe.recipe_description}}</div>
    	</div>
-   	<div class="col-xs-6 col-sm-3 div_content" style="background-color:lavenderblush;">Column 2</div>
-   	<div class="col-xs-6 col-sm-3 div_content" style="background-color:lightcyan;">Column 3</div>
    </div>
 </div>

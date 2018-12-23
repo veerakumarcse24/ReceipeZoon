@@ -13,6 +13,7 @@ import { RecipeComponent } from './recipe/recipe.component';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FlashMessagesModule } from 'angular2-flash-messages';
+import {SlideshowModule} from 'ng-simple-slideshow';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
     ReactiveFormsModule,
     HttpModule,
     HttpClientModule,
+    SlideshowModule,
     FlashMessagesModule.forRoot()
 
   ],

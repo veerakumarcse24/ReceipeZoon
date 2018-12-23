@@ -13,19 +13,21 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 export class RecipeComponent implements OnInit {
 
   registerForm: FormGroup;
-  urls = new Array<string>();
+  urls;
+  image_urls;
     submitted = false;
 
     constructor(private formBuilder: FormBuilder, public recipeService: RecipeService, private http: HttpClient, private _flashMessagesService: FlashMessagesService) { }
 
     ngOnInit() {
-        this._flashMessagesService.show('Success!', { cssClass: 'alert-success' } );
         this.registerForm = this.formBuilder.group({
             recipe_name: ['', Validators.required],
             recipe_images: [new Array<string>(), Validators.required],
             recipe_description: [''],
             recipe_due: ['']
         });
+        this.urls = new Array<string>();
+        this.image_urls = new Array<string>();
     }
 
     // convenience getter for easy access to form fields
@@ -39,21 +41,25 @@ export class RecipeComponent implements OnInit {
             return;
         }
 
-        this.recipeService.createRecipe(this.registerForm.value).then(
+        this.recipeService.createRecipe(this.registerForm.value, this.image_urls).then(
             (c: any) => {
-                alert(0);
+                if(c.Status === 'success')
+                {
+                    window.location.href = '';
+                    this._flashMessagesService.show(c.message, { cssClass: 'alert-success' });
+                }
+                else{
+                    this._flashMessagesService.show(c.message, { cssClass: 'alert-danger' });
+                }
             }
         );
-
-        alert('SUCCESS!! :-)')
-        console.log(this.registerForm.value);
     }
 
-    detectFiles(event) {
+    detectFiles(event) { 
 	    this.urls = [];
-	    this.registerForm.value.recipe_images = [];
 	    let files = event.target.files;
 	    if (files) {
+         this.image_urls = event.target.files;
 	      for (let file of files) {
 	        let reader = new FileReader();
 	        reader.onload = (e: any) => {

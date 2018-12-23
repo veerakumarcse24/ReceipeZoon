@@ -10,9 +10,23 @@ export class RecipeService {
 
   constructor(private http:HttpClient) { }
 
-  createRecipe(dataObj) {
-	  alert();
-	  console.log(dataObj);
-    return this.http.get(environment.hrBackend + `chat?inputmsg=`+dataObj).toPromise();
+  createRecipe(dataObj, imgUrls) {
+  	const formData: FormData = new FormData();
+	var i = 1;
+  	for (const file of imgUrls) {
+      formData.append('image_'+i, file, file.name);
+      i++;
+  	}
+  	formData.append('data', JSON.stringify(dataObj))
+    return this.http.post(environment.backendURL + `creatRecipe/`, formData).toPromise();
   }
+
+  getRecipes() {
+    return this.http.get(environment.backendURL + `getRecipes/`).toPromise();
+  }
+
+  deleteRecipe(dataObj) {
+    return this.http.post(environment.backendURL + `deleteRecipe/`, dataObj).toPromise();
+  }
+
 }
